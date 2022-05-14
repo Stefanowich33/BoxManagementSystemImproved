@@ -1,12 +1,12 @@
 package com.example.boxmanagementsystem.view.browse;
 
-import android.text.Editable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.boxmanagementsystem.objects.Component;
+import com.example.boxmanagementsystem.objects.Container;
 import com.example.boxmanagementsystem.objects.Item;
 import com.example.boxmanagementsystem.repository.ComponentDao;
 
@@ -44,5 +44,18 @@ public class BrowseViewModel extends ViewModel {
 
     public void removeComponent(int adapterPosition) {
         model.removeComponent(adapterPosition);
+    }
+
+    public LiveData<List<Component>> getOtherContainers() {
+        return model.getOtherContainers();
+    }
+
+    public void setMovingConatiner(Component component) {
+        model.setMovingComponent(component);
+        Log.d("setMove", "setMovingContainer: ");
+    }
+
+    public void moveComponent(){
+        model.moveComponent();
     }
 }

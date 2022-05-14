@@ -46,7 +46,10 @@ public class BrowseFragment extends Fragment {
     private AlertDialog dialog;
     private EditText editText;
     private Button cancel_btn;
+    private Button cancel_btn1;
     private Button add_btn;
+
+    private AlertDialog moveDialog;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +66,11 @@ public class BrowseFragment extends Fragment {
             } else if(component instanceof Item){
             }
         });
+
+        componentAdapter.setLongClickListener(component -> {
+            createNewMoveDialog(component);
+        });
+
 
         root = binding.getRoot();
         setHasOptionsMenu(true);
@@ -95,13 +103,18 @@ public class BrowseFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                browseViewModel.removeComponent(viewHolder.getAdapterPosition());
-                componentAdapter.notifyDataSetChanged();
+                if(componentAdapter.getComponents().get(viewHolder.getAdapterPosition())instanceof Item){
+                    browseViewModel.removeComponent(viewHolder.getAdapterPosition());
+                    componentAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(getContext(), "You can't destroy containers", Toast.LENGTH_SHORT).show();
+                    componentAdapter.notifyDataSetChanged();
+                }
+
             }
         };
-
-
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+
         recyclerView.setAdapter(componentAdapter);
 
 
@@ -162,5 +175,43 @@ public class BrowseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void createNewMoveDialog(Component component){
+
+        dialogBuilder = new AlertDialog.Builder(getContext());
+        final View moveItemPopupView = getLayoutInflater().inflate(R.layout.move_to_popup, null);
+        RecyclerView moveRecyclerView = moveItemPopupView.findViewById(R.id.moveRecycler);
+        cancel_btn1 = (Button) moveItemPopupView.findViewById(R.id.cancel_move);
+        moveRecyclerView.hasFixedSize();
+        moveRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ComponentAdapter componentAdapter1 = new ComponentAdapter();
+
+        BrowseViewModel browseViewModel = new ViewModelProvider(this).get(BrowseViewModel.class);
+        browseViewModel.setMovingConatiner(component);
+        browseViewModel.getOtherContainers().observe(getViewLifecycleOwner(), components -> componentAdapter1.update(components));
+
+        componentAdapter1.setOnClickListener(container -> {
+            component.move((Container) container);
+            browseViewModel.moveComponent();
+            dialog.dismiss();
+        });
+
+        cancel_btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        moveRecyclerView.setAdapter(componentAdapter1);
+
+
+        dialogBuilder.setView(moveItemPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+
     }
 }

@@ -1,5 +1,7 @@
 package com.example.boxmanagementsystem.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -8,6 +10,7 @@ import com.example.boxmanagementsystem.objects.Component;
 import com.example.boxmanagementsystem.objects.Container;
 import com.example.boxmanagementsystem.objects.Item;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class ComponentDao {
     private Container currentParent;
     private final MutableLiveData<List<Component>> currentChildren = new MutableLiveData<>();
     private final MutableLiveData<List<Component>> searchedItems = new MutableLiveData<>();
+    private final MutableLiveData<List<Component>> otherContainers = new MutableLiveData<>();
+    private Container movingContainer;
 
     private ComponentDao() {
         dataSet = new ArrayList<>();
@@ -129,6 +134,24 @@ public class ComponentDao {
             }
         }
         allComponents.setValue(dataSet);
+        setCurrentParent(currentParent.getName());
+        sortToItems();
+    }
+
+    public MutableLiveData<List<Component>> getOtherContainers() {
+        return otherContainers;
+    }
+    public void setMovingComponent(Component component){
+        Log.d("setMove", "setMovingContainer: ");
+        List<Component> result = new ArrayList<>();
+        for (Component comp: dataSet){
+            if(comp instanceof Container && !(component.getName().equals(comp.getName()))){
+                result.add(comp);
+            }
+        }
+        otherContainers.setValue(result);
+    }
+    public void moveComponent(){
         setCurrentParent(currentParent.getName());
         sortToItems();
     }

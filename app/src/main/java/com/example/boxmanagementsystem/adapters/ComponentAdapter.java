@@ -20,11 +20,16 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.View
 
     private List<Component> components = new ArrayList<>();
     private OnClickListener listener;
-
+    private OnLongClickListener longClickListener;
 
     public void setOnClickListener(OnClickListener listener) {
         this.listener = listener;
     }
+
+    public void setLongClickListener(OnLongClickListener longClickListener){
+        this.longClickListener = longClickListener;
+    }
+
     
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,7 +57,7 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.View
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
         private final TextView name;
         private ImageView image;
@@ -64,8 +69,23 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.View
             itemView.setOnClickListener(v -> {
                 listener.onClick(components.get(getAdapterPosition()));
             });
+            itemView.setOnLongClickListener(v -> {
+                longClickListener.onLongClick(components.get(getAdapterPosition()));
+                return false;
+            });
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            components.get(getAdapterPosition());
+            return false;
         }
     }
+
+    public List<Component> getComponents() {
+        return components;
+    }
+
     public void update(List<Component> components){
         this.components = components;
         notifyDataSetChanged();
@@ -75,4 +95,9 @@ public class ComponentAdapter extends RecyclerView.Adapter<ComponentAdapter.View
     public interface OnClickListener {
         void onClick(Component component);
     }
+
+    public interface OnLongClickListener {
+        void onLongClick(Component component);
+    }
+
 }

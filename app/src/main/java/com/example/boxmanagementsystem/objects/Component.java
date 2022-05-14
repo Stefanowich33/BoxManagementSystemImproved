@@ -16,6 +16,10 @@ public abstract class Component implements Serializable {
 
     public abstract Container getParent();
 
+    public abstract void move(Container destination);
+
+    public abstract void removeFromChildren(Component toBeRemoved);
+
     public abstract ArrayList<Component> getChildren();
 
     public abstract int getImageId();

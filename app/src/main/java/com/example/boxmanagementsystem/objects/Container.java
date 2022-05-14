@@ -45,8 +45,16 @@ public class Container extends Component implements Serializable {
     public Container getParent() {
         return parent;
     }
-    public void moveToNewContainer(Container container){
-        this.parent = container;
+
+    @Override
+    public void move(Container destination) {
+        parent.removeFromChildren(this);
+        destination.addToChildren(this);
+    }
+
+    @Override
+    public void removeFromChildren(Component toBeRemoved) {
+        parent.getChildren().remove(toBeRemoved);
     }
 
     @Override

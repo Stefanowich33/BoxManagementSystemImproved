@@ -27,6 +27,17 @@ public class Item extends Component implements Serializable {
     }
 
     @Override
+    public void move(Container destination) {
+        parent.removeFromChildren(this);
+        destination.addToChildren(this);
+    }
+
+    @Override
+    public void removeFromChildren(Component toBeRemoved) {
+        parent.getChildren().remove(toBeRemoved);
+    }
+
+    @Override
     public ArrayList<Component> getChildren() {
         return new ArrayList<>();
     }
