@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BoxManagementSystem</string>
+    <string name="find_by_qr">QR</string>
+    <string name="search_for_items">Search</string>
+    <string name="browse_storage">Browse</string>
+    <string name="add_item">Add Item</string>
+    <string name="cancel">Cancel</string>
+</resources>
