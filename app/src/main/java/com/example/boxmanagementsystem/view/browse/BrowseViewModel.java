@@ -10,6 +10,7 @@ import com.example.boxmanagementsystem.objects.Container;
 import com.example.boxmanagementsystem.objects.Item;
 import com.example.boxmanagementsystem.repository.ComponentDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BrowseViewModel extends ViewModel {
@@ -55,7 +56,7 @@ public class BrowseViewModel extends ViewModel {
         Log.d("setMove", "setMovingContainer: ");
     }
 
-    public void moveComponent(){
-        model.moveComponent();
+    public void moveComponent(Component toBeMoved,Container destination, ArrayList<Component> children){
+        model.moveComponent(toBeMoved,destination, children);
     }
 }

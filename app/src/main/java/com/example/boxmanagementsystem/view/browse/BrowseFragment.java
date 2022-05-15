@@ -193,8 +193,8 @@ public class BrowseFragment extends Fragment {
         browseViewModel.getOtherContainers().observe(getViewLifecycleOwner(), components -> componentAdapter1.update(components));
 
         componentAdapter1.setOnClickListener(container -> {
-            component.move((Container) container);
-            browseViewModel.moveComponent();
+            browseViewModel.moveComponent(component, (Container) container, component.getChildren());
+            componentAdapter.notifyDataSetChanged();
             dialog.dismiss();
         });
 
@@ -211,7 +211,5 @@ public class BrowseFragment extends Fragment {
         dialogBuilder.setView(moveItemPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
-
-
     }
 }

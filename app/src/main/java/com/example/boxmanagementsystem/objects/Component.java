@@ -12,11 +12,7 @@ public abstract class Component implements Serializable {
 
     public abstract String getName();
 
-    abstract String setName();
-
     public abstract Container getParent();
-
-    public abstract void move(Container destination);
 
     public abstract void removeFromChildren(Component toBeRemoved);
 
@@ -24,4 +20,9 @@ public abstract class Component implements Serializable {
 
     public abstract int getImageId();
 
+    public abstract ArrayList<Component> getAllBeneth();
+
+    public abstract Object getLocation();
+
+    public abstract void setParent(Container parent);
 }

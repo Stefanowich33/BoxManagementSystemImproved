@@ -2,6 +2,7 @@ package com.example.boxmanagementsystem.objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Container extends Component implements Serializable {
     private ArrayList<Component> children;
@@ -13,6 +14,17 @@ public class Container extends Component implements Serializable {
         this.name = name;
         this.imageId = imageId;
         parent.addToChildren(this);
+    }
+
+    public Container(Container container, String name,int imageId, ArrayList<Component> children) {
+        this.children = children;
+        parent = container;
+        this.name = name;
+        this.imageId = imageId;
+        parent.addToChildren(this);
+        for (Component child: children) {
+            child.setParent(this);
+        }
     }
 
     public Container(String name) {
@@ -47,12 +59,6 @@ public class Container extends Component implements Serializable {
     }
 
     @Override
-    public void move(Container destination) {
-        parent.removeFromChildren(this);
-        destination.addToChildren(this);
-    }
-
-    @Override
     public void removeFromChildren(Component toBeRemoved) {
         parent.getChildren().remove(toBeRemoved);
     }
@@ -61,9 +67,28 @@ public class Container extends Component implements Serializable {
     public String getName() {
         return name;
     }
+    public void setChildren(ArrayList<Component> children) {
+        this.children = children;
+    }
+
+
+    //integrate methods like this instead of micro manageing
+    public ArrayList<Component> getAllBeneth(){
+        ArrayList<Component> result = new ArrayList<>();
+        for (Component children1: children) {
+            result = children1.getAllBeneth();
+            result.addAll(children);
+        }
+        return result;
+    }
 
     @Override
-    String setName() {
-        return name;
+    public Object getLocation() {
+        return null;
+    }
+
+    @Override
+    public void setParent(Container parent) {
+        this.parent = parent;
     }
 }

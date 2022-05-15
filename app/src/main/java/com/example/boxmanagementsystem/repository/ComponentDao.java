@@ -33,6 +33,8 @@ public class ComponentDao {
         sortToItems();
     }
 
+
+
     public static ComponentDao getInstance(){
         if(instance == null) {
             instance = new ComponentDao();
@@ -131,6 +133,7 @@ public class ComponentDao {
             if(dataSet.get(i).equals(toBeRemoved)){
                 currentParent.removeChild(toBeRemoved);
                 dataSet.remove(i);
+                break;
             }
         }
         allComponents.setValue(dataSet);
@@ -151,8 +154,22 @@ public class ComponentDao {
         }
         otherContainers.setValue(result);
     }
-    public void moveComponent(){
+
+
+    public void moveComponent(Component toBeMoved,Container destination, ArrayList<Component> children){
+        currentParent.removeChild(toBeMoved);
+        dataSet.remove(toBeMoved);
+        if(toBeMoved instanceof Container){
+            dataSet.add(new Container(destination,toBeMoved.getName(),toBeMoved.getImageId(),children));
+            //When moving a container the children are imported as a quick fix, but the children st
+        }
+        if (toBeMoved instanceof Item){
+            dataSet.add(new Item(destination,toBeMoved.getName(),toBeMoved.getImageId()));
+        }
         setCurrentParent(currentParent.getName());
         sortToItems();
     }
+
+
+
 }

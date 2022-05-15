@@ -22,6 +22,7 @@ import com.example.boxmanagementsystem.R;
 import com.example.boxmanagementsystem.adapters.ComponentAdapter;
 import com.example.boxmanagementsystem.databinding.FragmentBrowseBinding;
 import com.example.boxmanagementsystem.objects.Component;
+import com.example.boxmanagementsystem.objects.Item;
 
 import java.util.Stack;
 
@@ -111,19 +112,8 @@ public class SearchFragment extends Fragment {
         location = informationPopupView.findViewById(R.id.item_loaction);
         itemName.setText("Name: " + item.getName());
 
-        StringBuilder builder = new StringBuilder();
-        builder.append("Location: ");
-        Stack<String> locationStack = new Stack<>();
-        Component parent = item;
-        while(!parent.getName().equals("house")){
-                parent = parent.getParent();
-                String parentName = parent.getName();
-                locationStack.push(parentName);
-        }
-        while (!locationStack.isEmpty()) {
-            builder.append(locationStack.pop() + " ----> ");
-        }
-        location.setText(builder.toString());
+
+        location.setText(""+item.getLocation());
         dialogBuilder.setView(informationPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
