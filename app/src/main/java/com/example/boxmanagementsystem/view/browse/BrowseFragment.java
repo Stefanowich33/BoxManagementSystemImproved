@@ -1,7 +1,6 @@
 package com.example.boxmanagementsystem.view.browse;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,17 +20,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.boxmanagementsystem.MainActivity;
 import com.example.boxmanagementsystem.R;
 import com.example.boxmanagementsystem.adapters.ComponentAdapter;
-import com.example.boxmanagementsystem.databinding.ActivityMainBinding;
 import com.example.boxmanagementsystem.databinding.FragmentBrowseBinding;
 import com.example.boxmanagementsystem.objects.Component;
 import com.example.boxmanagementsystem.objects.Container;
 import com.example.boxmanagementsystem.objects.Item;
-
-import java.util.Objects;
-import java.util.Stack;
 
 public class BrowseFragment extends Fragment {
 
@@ -45,9 +38,12 @@ public class BrowseFragment extends Fragment {
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText editText;
-    private Button cancel_btn;
-    private Button cancel_btn1;
+    private EditText editText_box;
+    private Button cancel_btn_add;
+    private Button cancel_btn_move;
     private Button add_btn;
+    private Button cancel_btn_box;
+    private Button add_box_btn;
 
     private AlertDialog moveDialog;
 
@@ -138,6 +134,9 @@ public class BrowseFragment extends Fragment {
         if(id == R.id.back){
             browseViewModel.back();
         }
+        if(id == R.id.add_box){
+            createNewAddBoxDialog();
+        }
 
 
         return super.onContextItemSelected(item);
@@ -146,7 +145,7 @@ public class BrowseFragment extends Fragment {
         dialogBuilder = new AlertDialog.Builder(getContext());
         final View addItemPopupView = getLayoutInflater().inflate(R.layout.make_item_fragment, null);
         add_btn = (Button) addItemPopupView.findViewById(R.id.add_item_btn);
-        cancel_btn = (Button) addItemPopupView.findViewById(R.id.cancel_button);
+        cancel_btn_add = (Button) addItemPopupView.findViewById(R.id.cancel_button);
         editText = addItemPopupView.findViewById(R.id.editTextTextName);
 
         BrowseViewModel browseViewModel = new ViewModelProvider(this).get(BrowseViewModel.class);
@@ -163,13 +162,42 @@ public class BrowseFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
+        cancel_btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
     }
+
+    public void createNewAddBoxDialog(){
+        dialogBuilder = new AlertDialog.Builder(getContext());
+        final View addItemPopupView = getLayoutInflater().inflate(R.layout.make_item_fragment, null);
+        add_box_btn = (Button) addItemPopupView.findViewById(R.id.add_item_btn);
+        cancel_btn_box = (Button) addItemPopupView.findViewById(R.id.cancel_button);
+        editText_box = addItemPopupView.findViewById(R.id.editTextTextName);
+
+        BrowseViewModel browseViewModel = new ViewModelProvider(this).get(BrowseViewModel.class);
+
+        dialogBuilder.setView(addItemPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        add_box_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browseViewModel.insertBox(editText_box.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        cancel_btn_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -182,7 +210,7 @@ public class BrowseFragment extends Fragment {
         dialogBuilder = new AlertDialog.Builder(getContext());
         final View moveItemPopupView = getLayoutInflater().inflate(R.layout.move_to_popup, null);
         RecyclerView moveRecyclerView = moveItemPopupView.findViewById(R.id.moveRecycler);
-        cancel_btn1 = (Button) moveItemPopupView.findViewById(R.id.cancel_move);
+        cancel_btn_move = (Button) moveItemPopupView.findViewById(R.id.cancel_move);
         moveRecyclerView.hasFixedSize();
         moveRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -198,7 +226,7 @@ public class BrowseFragment extends Fragment {
             dialog.dismiss();
         });
 
-        cancel_btn1.setOnClickListener(new View.OnClickListener() {
+        cancel_btn_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();

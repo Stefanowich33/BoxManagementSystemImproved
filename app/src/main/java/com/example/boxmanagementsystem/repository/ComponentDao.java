@@ -74,9 +74,9 @@ public class ComponentDao {
 
     public void makeData(){
         dataSet.add(house);
-        Container livingRoom = new Container(house, "Living Room", R.drawable.protector);
+        Container livingRoom = new Container(house, "Living Room", R.drawable.parcel);
         dataSet.add(livingRoom);
-        Container garage = new Container(house, "Garage", R.drawable.protector);
+        Container garage = new Container(house, "Garage", R.drawable.parcel);
         dataSet.add(garage);
         Container box1 = new Container(garage, "Garage Box 1", R.drawable.parcel);
         dataSet.add(box1);
@@ -171,5 +171,9 @@ public class ComponentDao {
     }
 
 
-
+    public void insertBox(Container newBox) {
+        dataSet.add(newBox);
+        allComponents.setValue(dataSet);
+        setCurrentParent(currentParent.getName());
+    }
 }

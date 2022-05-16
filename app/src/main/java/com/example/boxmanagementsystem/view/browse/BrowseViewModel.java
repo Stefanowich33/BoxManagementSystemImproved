@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.boxmanagementsystem.R;
 import com.example.boxmanagementsystem.objects.Component;
 import com.example.boxmanagementsystem.objects.Container;
 import com.example.boxmanagementsystem.objects.Item;
@@ -58,5 +59,9 @@ public class BrowseViewModel extends ViewModel {
 
     public void moveComponent(Component toBeMoved,Container destination, ArrayList<Component> children){
         model.moveComponent(toBeMoved,destination, children);
+    }
+
+    public void insertBox(String toString) {
+        model.insertBox(new Container(model.getCurrentParent(), toString, R.drawable.parcel));
     }
 }
