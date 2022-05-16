@@ -14,9 +14,10 @@ Person 1: finally found it.
 Person 1: Hmm can't remember where the christmas star is. Hmm ill just browse the items in my app, click on the item and see exactly what room and box the item is stored in.
 
 ## Software requirenments
-1. The User should be able to log what boxes he has and where in the house they are.
-2. The User should be able to log which items stored in which boxes.
-3. The User should be able to browse these boxes in the app and see what items are inside.
-4. The User should to able to browse all items and then see what box it is stored in.
-5. The User should be able to browse the contents of a box by scanning a physical QR code on the box.
+1. The User should be able to log what boxes he has and where in the house they are(completed).
+2. The User should be able to log which items stored in which boxes(completed).
+3. The User should be able to browse these boxes in the app and see what items are inside(completed).
+4. The User should to able to browse/search all items and then see what box it is stored in(comleted).
+5. The User should be able to browse the contents of a box by scanning a physical QR code on the box(to be completed).
 
+*user storeis completed for the demo, storgae and backup not implemented yet.
