@@ -21,3 +21,5 @@ Person 1: Hmm can't remember where the christmas star is. Hmm ill just browse th
 5. The User should be able to browse the contents of a box by scanning a physical QR code on the box(to be completed).
 
 *user storeis completed for the demo, storgae and backup not implemented yet.
+
+Video of the app: https://youtu.be/ZWuyfJ9ML0U
