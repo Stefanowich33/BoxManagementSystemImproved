@@ -1,7 +1,7 @@
 # BoxManagementSystem
 An app to keep track of which boxes contains which items in your house.
 
-## The pourpose is to solve this problem: 
+## The purpose is to solve this problem: 
 Person 1: Where did you put the christmas star for the tree???
 Person 2: Isn't it in one of the boxes in the garage??
 Person 1: No! i looked though all the boxes.
